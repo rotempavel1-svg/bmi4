@@ -1,15 +1,23 @@
 package com.rotempavel.bmi4;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
+import android.webkit.DownloadListener;
+import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.JavascriptInterface;
 import android.webkit.PermissionRequest;
+import android.app.DownloadManager;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.customtabs.CustomTabsIntent;
 
@@ -39,16 +47,41 @@ public class MainActivity extends AppCompatActivity {
         settings.setMediaPlaybackRequiresUserGesture(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
 
-        // KEY FIX 1: Use Chrome user agent (remove "wv" WebView marker)
-        // Google blocks OAuth when it sees "wv" in the user agent
+        // Fix OAuth block by removing "wv" from User Agent
         String currentUA = settings.getUserAgentString();
         String chromeUA = currentUA.replace("; wv)", ")").replace("Version/4.0 ", "");
         settings.setUserAgentString(chromeUA);
 
+        // --- הוספת תמיכה בהורדת קבצים ---
+        webView.setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+                request.setMimeType(mimetype);
+                request.addRequestHeader("User-Agent", userAgent);
+                request.setDescription("מוריד קובץ...");
+                request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimetype));
+                
+                DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                if (dm != null) {
+                    dm.enqueue(request);
+                    Toast.makeText(getApplicationContext(), "ההורדה מתחילה...", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        // --- בקשת הרשאה להתראות (לאנדרואיד 13 ומעלה) ---
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+            }
+        }
+
         // JavaScript bridge for native communication
         webView.addJavascriptInterface(new AndroidBridge(), "AndroidBridge");
 
-        // KEY FIX 2: Intercept OAuth URLs and launch Chrome Custom Tabs
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -67,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Check if app was opened via OAuth callback intent
         if (!handleOAuthIntent(getIntent())) {
             webView.loadUrl(APP_URL);
         }
@@ -80,14 +112,8 @@ public class MainActivity extends AppCompatActivity {
         handleOAuthIntent(intent);
     }
 
-    /**
-     * Handle the OAuth callback URL.
-     * When Chrome Custom Tabs redirects to our app URL after Google auth,
-     * Android calls this with the URL containing the token in the fragment.
-     */
     private boolean handleOAuthIntent(Intent intent) {
         if (intent == null) return false;
-
         Uri data = intent.getData();
         if (data == null) return false;
 
@@ -103,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
             webView.loadUrl(url);
             return true;
         }
-
         return false;
     }
 
@@ -128,10 +153,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * JavaScript-accessible bridge.
-     * The web app can call these methods via window.AndroidBridge.xxx()
-     */
     class AndroidBridge {
         @JavascriptInterface
         public boolean isAndroidApp() {

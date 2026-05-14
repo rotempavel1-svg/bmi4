@@ -324,6 +324,141 @@ body{background:var(--bg);display:flex;justify-content:center;height:100dvh;over
 .dark-toggle-btn{width:34px;height:34px;background:rgba(255,255,255,.2);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;flex-shrink:0}
 
 /* ═══════════════════════════════════════════════
+   AI BOT - Chat Interface (SMS Style)
+═══════════════════════════════════════════════ */
+
+/* Special prominent AI nav item */
+.nav-ai-special{position:relative}
+.nav-ai-special .material-icons-round{background:linear-gradient(135deg,#6C5CE7,#A29BFE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:24px!important}
+.nav-ai-special.active{background:rgba(108,92,231,.1)!important;color:#6C5CE7!important}
+.nav-ai-special.active .material-icons-round{-webkit-text-fill-color:#6C5CE7}
+
+/* AI Tab Container */
+#tab-ai{display:none;flex-direction:column;height:calc(100vh - 60px);padding:0!important;background:linear-gradient(180deg,#F8F7FC,#F0EEFA);position:relative}
+#tab-ai.active{display:flex}
+[data-theme="dark"] #tab-ai{background:linear-gradient(180deg,#1A1A2E,#0F0F1E)}
+
+/* Header */
+.ai-header{display:flex;align-items:center;gap:11px;padding:12px 14px;background:#fff;border-bottom:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04);position:sticky;top:0;z-index:10}
+[data-theme="dark"] .ai-header{background:#1C1C2E;border-color:rgba(255,255,255,.06)}
+.ai-avatar-wrap{position:relative;flex-shrink:0}
+.ai-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#6C5CE7,#A29BFE);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 3px 10px rgba(108,92,231,.4)}
+.ai-status-dot{position:absolute;bottom:1px;right:1px;width:10px;height:10px;border-radius:50%;background:#9CA3AF;border:2px solid #fff}
+.ai-status-dot.online{background:#10B981;box-shadow:0 0 6px rgba(16,185,129,.6)}
+.ai-name{font-size:14px;font-weight:800;color:var(--t1)}
+.ai-status-text{font-size:10.5px;color:var(--t3);margin-top:1px}
+.ai-settings-btn{background:rgba(108,92,231,.1);border:none;width:36px;height:36px;border-radius:50%;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ai-settings-btn:active{background:rgba(108,92,231,.2)}
+
+/* Quick Actions */
+.ai-quick-actions{display:flex;gap:8px;padding:10px 12px;overflow-x:auto;background:#fff;border-bottom:1px solid rgba(0,0,0,.04);scrollbar-width:none}
+.ai-quick-actions::-webkit-scrollbar{display:none}
+[data-theme="dark"] .ai-quick-actions{background:#1C1C2E;border-color:rgba(255,255,255,.04)}
+.ai-quick-btn{display:flex;align-items:center;gap:6px;padding:8px 12px;background:linear-gradient(135deg,rgba(108,92,231,.08),rgba(162,155,254,.05));border:1.5px solid rgba(108,92,231,.15);border-radius:18px;font-family:Rubik,sans-serif;font-size:11.5px;font-weight:600;color:#6C5CE7;cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.ai-quick-btn:active{transform:scale(.96);background:rgba(108,92,231,.15)}
+[data-theme="dark"] .ai-quick-btn{background:rgba(108,92,231,.15);color:#A29BFE}
+
+/* Chat Container */
+.ai-chat-container{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth}
+.ai-chat-container::-webkit-scrollbar{width:4px}
+.ai-chat-container::-webkit-scrollbar-thumb{background:rgba(108,92,231,.2);border-radius:2px}
+
+/* Welcome Screen */
+.ai-welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;text-align:center;min-height:200px}
+.ai-welcome-emoji{font-size:54px;margin-bottom:14px;animation:aiPulse 2.5s ease-in-out infinite}
+@keyframes aiPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.ai-welcome-title{font-size:17px;font-weight:800;color:var(--t1);margin-bottom:8px}
+.ai-welcome-text{font-size:12.5px;color:var(--t3);line-height:1.7;max-width:280px}
+
+/* Messages - SMS Style */
+.ai-msg{max-width:78%;padding:10px 13px;border-radius:18px;font-size:13.5px;line-height:1.5;word-wrap:break-word;position:relative;animation:msgIn .25s cubic-bezier(.34,1.56,.64,1)}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+.ai-msg-user{align-self:flex-start;background:linear-gradient(135deg,#6C5CE7,#5849D6);color:#fff;border-bottom-left-radius:4px;box-shadow:0 2px 8px rgba(108,92,231,.25)}
+.ai-msg-user .ai-msg-time{color:rgba(255,255,255,.7)}
+
+.ai-msg-bot{align-self:flex-end;background:#fff;color:var(--t1);border-bottom-right-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04)}
+[data-theme="dark"] .ai-msg-bot{background:#2C2C3E;color:#E5E7EB;border-color:rgba(255,255,255,.06)}
+
+.ai-msg-time{font-size:9.5px;margin-top:4px;opacity:.6;font-weight:500}
+
+.ai-msg-bot strong{color:#6C5CE7;font-weight:700}
+[data-theme="dark"] .ai-msg-bot strong{color:#A29BFE}
+.ai-msg-bot em{font-style:italic;color:var(--t2)}
+.ai-msg-bot code{background:rgba(108,92,231,.1);padding:1px 5px;border-radius:4px;font-size:11px;font-family:monospace}
+
+/* Day separator */
+.ai-day-sep{align-self:center;background:rgba(0,0,0,.05);padding:4px 12px;border-radius:10px;font-size:9.5px;color:var(--t3);font-weight:600;margin:10px 0 4px}
+[data-theme="dark"] .ai-day-sep{background:rgba(255,255,255,.06)}
+
+/* Typing Indicator */
+.ai-typing{padding:0 12px 8px}
+.ai-typing-bubble{display:inline-flex;align-items:center;gap:4px;background:#fff;padding:11px 14px;border-radius:18px;border-bottom-right-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04)}
+[data-theme="dark"] .ai-typing-bubble{background:#2C2C3E;border-color:rgba(255,255,255,.06)}
+.ai-typing-dot{width:7px;height:7px;background:#9CA3AF;border-radius:50%;animation:typing 1.4s infinite ease-in-out}
+.ai-typing-dot:nth-child(2){animation-delay:.2s}
+.ai-typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes typing{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-6px);opacity:1}}
+
+/* Input Bar */
+.ai-input-bar{display:flex;align-items:flex-end;gap:8px;padding:10px 12px;background:#fff;border-top:1px solid rgba(0,0,0,.06);box-shadow:0 -2px 8px rgba(0,0,0,.04)}
+[data-theme="dark"] .ai-input-bar{background:#1C1C2E;border-color:rgba(255,255,255,.06)}
+#ai-input{flex:1;border:1.5px solid var(--border);border-radius:20px;padding:10px 14px;font-family:Rubik,sans-serif;font-size:13px;background:var(--surface);color:var(--t1);outline:none;resize:none;max-height:100px;line-height:1.4;transition:border-color .2s}
+#ai-input:focus{border-color:#6C5CE7}
+[data-theme="dark"] #ai-input{background:#2C2C3E;color:#E5E7EB}
+.ai-send-btn{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#6C5CE7,#5849D6);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(108,92,231,.4);flex-shrink:0;transition:all .15s}
+.ai-send-btn:active{transform:scale(.92)}
+.ai-send-btn:disabled{background:#D1D5DB;box-shadow:none;cursor:not-allowed}
+.ai-send-btn .material-icons-round{transform:rotate(180deg)}
+
+/* Settings Modal */
+.ai-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(7px);z-index:9000;display:none;align-items:flex-end;justify-content:center}
+.ai-modal-overlay.open{display:flex}
+.ai-modal{background:#fff;border-radius:24px 24px 0 0;padding:18px 18px 30px;width:100%;max-width:430px;animation:sheetUp .35s cubic-bezier(.16,1,.3,1);max-height:90vh;overflow-y:auto}
+[data-theme="dark"] .ai-modal{background:#1C1C2E}
+.ai-modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+
+/* Daily Summary Card (in chat) */
+.ai-daily-summary{align-self:center;width:92%;background:linear-gradient(135deg,#FFF6E5,#FFF9F0);border:1.5px solid rgba(255,169,64,.2);border-radius:14px;padding:12px;margin:6px 0}
+.ai-daily-summary-title{font-size:11px;font-weight:800;color:#FF9F1C;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.ai-daily-summary-text{font-size:12px;color:var(--t1);line-height:1.6}
+[data-theme="dark"] .ai-daily-summary{background:rgba(255,169,64,.1);border-color:rgba(255,169,64,.3)}
+
+/* Status colors */
+.ai-status-text.connected{color:var(--green-1)}
+.ai-status-text.error{color:var(--danger)}
+
+/* Compact Data Table */
+.ai-data-section{background:#fff;border-bottom:1px solid rgba(0,0,0,.04)}
+[data-theme="dark"] .ai-data-section{background:#1C1C2E;border-color:rgba(255,255,255,.04)}
+.ai-data-toggle{width:100%;display:flex;justify-content:space-between;align-items:center;padding:9px 14px;background:none;border:none;cursor:pointer;font-family:Rubik,sans-serif;font-size:12px;font-weight:700;color:var(--t1);transition:background .15s}
+.ai-data-toggle:active{background:rgba(108,92,231,.05)}
+.ai-data-count{background:rgba(108,92,231,.12);color:#6C5CE7;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:8px;margin-right:4px}
+[data-theme="dark"] .ai-data-count{background:rgba(108,92,231,.2);color:#A29BFE}
+.ai-data-arrow{font-size:9px;color:var(--t3);transition:transform .25s;display:inline-block}
+.ai-data-toggle.expanded .ai-data-arrow{transform:rotate(180deg)}
+.ai-data-table-wrap{max-height:0;overflow-y:auto;overflow-x:auto;transition:max-height .3s ease;background:rgba(0,0,0,.02);scrollbar-width:thin}
+[data-theme="dark"] .ai-data-table-wrap{background:rgba(255,255,255,.02)}
+.ai-data-table-wrap.open{max-height:240px;border-top:1px solid rgba(0,0,0,.05)}
+.ai-data-table{width:100%;border-collapse:collapse;font-size:10px;direction:rtl}
+.ai-data-table thead{position:sticky;top:0;background:linear-gradient(135deg,rgba(108,92,231,.08),rgba(162,155,254,.04));z-index:2;backdrop-filter:blur(8px)}
+[data-theme="dark"] .ai-data-table thead{background:linear-gradient(135deg,rgba(108,92,231,.15),rgba(162,155,254,.08))}
+.ai-data-table th{padding:6px 5px;text-align:center;font-weight:700;color:#6C5CE7;font-size:9px;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;border-bottom:1.5px solid rgba(108,92,231,.15)}
+[data-theme="dark"] .ai-data-table th{color:#A29BFE}
+.ai-data-table td{padding:6px 5px;text-align:center;color:var(--t1);border-bottom:1px solid rgba(0,0,0,.04);font-weight:500;white-space:nowrap}
+[data-theme="dark"] .ai-data-table td{border-color:rgba(255,255,255,.04)}
+.ai-data-table tbody tr:hover{background:rgba(108,92,231,.03)}
+.ai-data-table tbody tr.today-row{background:rgba(45,198,83,.06);font-weight:700}
+[data-theme="dark"] .ai-data-table tbody tr.today-row{background:rgba(45,198,83,.12)}
+.ai-data-table .td-date{font-weight:700;color:#6C5CE7;text-align:right;padding-right:10px}
+[data-theme="dark"] .ai-data-table .td-date{color:#A29BFE}
+.ai-data-table .td-good{color:var(--green-1);font-weight:700}
+.ai-data-table .td-bad{color:var(--danger)}
+.ai-data-table .td-warn{color:var(--warn)}
+.ai-data-table .td-empty{color:var(--t3);opacity:.4}
+.ai-data-empty{padding:18px;text-align:center;font-size:11px;color:var(--t3);line-height:1.7}
+
+/* ═══════════════════════════════════════════════
    2. FOOD DATABASE
 ═══════════════════════════════════════════════ */
 .food-search-inp{padding:11px 13px;border:1.5px solid var(--border);border-radius:var(--r);font-size:13px;background:var(--surface);font-family:'Rubik',sans-serif;color:var(--t1);outline:none;transition:border-color .2s}
@@ -554,6 +689,146 @@ body{background:var(--bg);display:flex;justify-content:center;height:100dvh;over
       <div class="ig" style="margin-bottom:0"><label>שומן (g)</label><input type="number" id="manual-food-fat" placeholder="12"></div>
     </div>
     <button class="btn-main" onclick="addManualFood()">+ הוסף ליומן</button>
+  </div>
+</div>
+
+<!-- AI BOT TAB -->
+<div id="tab-ai" class="tab">
+  <div class="ai-header">
+    <div class="ai-avatar-wrap">
+      <div class="ai-avatar">🤖</div>
+      <div class="ai-status-dot" id="ai-status-dot"></div>
+    </div>
+    <div style="flex:1">
+      <div class="ai-name">יועץ הבריאות AI</div>
+      <div class="ai-status-text" id="ai-status-text">לחץ ⚙️ להגדרה ראשונית</div>
+    </div>
+    <button class="ai-settings-btn" onclick="openAISettings()" title="הגדרות">⚙️</button>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="ai-quick-actions" id="ai-quick-actions">
+    <button class="ai-quick-btn" onclick="aiQuickAction('summary')">
+      <span style="font-size:18px">📊</span>
+      <span>סכם לי את היום</span>
+    </button>
+    <button class="ai-quick-btn" onclick="aiQuickAction('advice')">
+      <span style="font-size:18px">💡</span>
+      <span>תן לי טיפ</span>
+    </button>
+    <button class="ai-quick-btn" onclick="aiQuickAction('motivation')">
+      <span style="font-size:18px">💪</span>
+      <span>עודד אותי</span>
+    </button>
+    <button class="ai-quick-btn" onclick="aiQuickAction('analyze')">
+      <span style="font-size:18px">📈</span>
+      <span>נתח התקדמות</span>
+    </button>
+  </div>
+
+  <!-- Compact Data Table (Collapsible) -->
+  <div class="ai-data-section">
+    <button class="ai-data-toggle" onclick="toggleAIDataTable()" id="ai-data-toggle">
+      <span style="display:flex;align-items:center;gap:6px">
+        <span style="font-size:14px">📊</span>
+        <span>הנתונים שלי</span>
+        <span class="ai-data-count" id="ai-data-count">0 ימים</span>
+      </span>
+      <span class="ai-data-arrow" id="ai-data-arrow">▼</span>
+    </button>
+    <div class="ai-data-table-wrap" id="ai-data-table-wrap">
+      <table class="ai-data-table" id="ai-data-table">
+        <thead>
+          <tr>
+            <th>תאריך</th>
+            <th>משקל</th>
+            <th>קל׳ נכנסו</th>
+            <th>קל׳ יצאו</th>
+            <th>חלבון</th>
+            <th>פחמ׳</th>
+            <th>שומן</th>
+            <th>מים</th>
+            <th>צעדים</th>
+            <th>שינה</th>
+          </tr>
+        </thead>
+        <tbody id="ai-data-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Chat Container -->
+  <div class="ai-chat-container" id="ai-chat-container">
+    <div class="ai-welcome" id="ai-welcome">
+      <div class="ai-welcome-emoji">🤖</div>
+      <div class="ai-welcome-title">שלום! אני היועץ האישי שלך</div>
+      <div class="ai-welcome-text">
+        אני מכיר את כל הנתונים שלך - משקל, תזונה, פעילות. 
+        אני זוכר את ההיסטוריה ויכול לעזור לך להגיע ליעדים.
+        <br><br>
+        כדי להתחיל, לחץ על ⚙️ בפינה והגדר את ה-API.
+      </div>
+    </div>
+  </div>
+
+  <!-- Typing Indicator -->
+  <div class="ai-typing" id="ai-typing" style="display:none">
+    <div class="ai-typing-bubble">
+      <span class="ai-typing-dot"></span>
+      <span class="ai-typing-dot"></span>
+      <span class="ai-typing-dot"></span>
+    </div>
+  </div>
+
+  <!-- Input Bar -->
+  <div class="ai-input-bar">
+    <textarea id="ai-input" placeholder="כתוב הודעה..." rows="1" oninput="aiAutoResize(this)" onkeydown="aiHandleKey(event)"></textarea>
+    <button id="ai-send-btn" class="ai-send-btn" onclick="aiSendMessage()" title="שלח">
+      <span class="material-icons-round" style="font-size:22px">send</span>
+    </button>
+  </div>
+</div>
+
+<!-- AI SETTINGS MODAL -->
+<div class="ai-modal-overlay" id="ai-settings-modal" onclick="if(event.target===this)closeAISettings()">
+  <div class="ai-modal">
+    <div class="ai-modal-header">
+      <div style="font-size:17px;font-weight:800;color:var(--t1)">⚙️ הגדרות AI</div>
+      <button onclick="closeAISettings()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--t2)">✕</button>
+    </div>
+
+    <div style="font-size:11px;color:var(--t3);margin-bottom:14px;line-height:1.6">
+      היועץ עובד עם <strong>Anthropic Claude API</strong>.
+      <br>צריך לקבל מפתח API <a href="https://console.anthropic.com/" target="_blank" style="color:var(--green-1);font-weight:600">מהאתר הזה</a> ולהדביק כאן.
+    </div>
+
+    <div class="ig">
+      <label>ספק AI</label>
+      <select id="ai-provider-select" onchange="updateAIProvider()">
+        <option value="anthropic">Anthropic Claude (מומלץ)</option>
+        <option value="openai">OpenAI GPT</option>
+        <option value="gemini">Google Gemini (חינמי)</option>
+      </select>
+    </div>
+
+    <div class="ig">
+      <label>מפתח API</label>
+      <input type="password" id="ai-api-key" placeholder="הדבק כאן את המפתח...">
+    </div>
+
+    <div class="ig">
+      <label>שם להזדהות (אופציונלי)</label>
+      <input type="text" id="ai-user-name" placeholder="איך לקרוא לך?">
+    </div>
+
+    <div style="background:rgba(45,198,83,.08);border:1px solid rgba(45,198,83,.2);border-radius:10px;padding:10px;margin-bottom:14px;font-size:10.5px;color:var(--t2);line-height:1.6">
+      🔒 <strong>פרטיות:</strong> המפתח נשמר רק בטלפון שלך (localStorage).<br>
+      🧠 <strong>זיכרון:</strong> כל השיחות וסיכומי הימים נשמרים מקומית.<br>
+      📊 <strong>הקשר:</strong> ה-AI מקבל את הנתונים שלך כל שיחה.
+    </div>
+
+    <button class="btn-main" onclick="saveAISettings()">💾 שמור הגדרות</button>
+    <button onclick="aiClearHistory()" style="margin-top:8px;width:100%;padding:11px;background:rgba(255,71,87,.08);color:var(--danger);border:1.5px solid rgba(255,71,87,.2);border-radius:var(--r);font-family:Rubik,sans-serif;font-size:12px;font-weight:600;cursor:pointer">🗑️ מחק את כל היסטוריית השיחות</button>
   </div>
 </div>
 
@@ -869,6 +1144,7 @@ body{background:var(--bg);display:flex;justify-content:center;height:100dvh;over
 
 <div class="bnav">
   <div class="nav-item active" id="nav-dashboard" onclick="switchTab('dashboard',this)"><span class="material-icons-round">home</span><span>בית</span></div>
+  <div class="nav-item nav-ai-special" id="nav-ai" onclick="switchTab('ai',this)"><span class="material-icons-round">smart_toy</span><span>יועץ AI</span></div>
   <div class="nav-item" id="nav-food" onclick="switchTab('food',this)"><span class="material-icons-round">restaurant</span><span>מזון</span></div>
   <div class="nav-item" id="nav-calories" onclick="switchTab('calories',this)"><span class="material-icons-round">edit_note</span><span>תיעוד</span></div>
   <div class="nav-item" id="nav-analytics" onclick="switchTab('analytics',this)"><span class="material-icons-round">bar_chart</span><span>ניתוח</span></div>
@@ -1495,6 +1771,12 @@ function switchTab(id,el){
   
   if(id==='dashboard') updateDash();
   if(id==='food') initFoodTab();
+  if(id==='ai') {
+    // Refresh chat and data table when entering AI tab
+    renderAIChatMessages();
+    renderAIDataTable();
+    aiAutoScroll();
+  }
   if(id==='analytics'){renderAnalytics();renderHistory();initChart();}
   if(id==='journey'){const cur=getCur();buildRoadmap(D.startWeight-cur,D.startWeight-(D.targetWeight||0));renderBadges();}
   if(id==='calories'){
@@ -1565,7 +1847,7 @@ function updateProgressRing(pct){
 }
 
 // ─── SWIPE NAVIGATION ───
-const TAB_ORDER=['dashboard','food','calories','analytics','journey'];
+const TAB_ORDER=['dashboard','ai','food','calories','analytics','journey'];
 function initSwipe(){
   let sx=0,sy=0,dragging=false;
   const app=document.querySelector('.app');
@@ -2660,6 +2942,746 @@ async function fetchGFitAggregate(dataType,startMs,endMs,valType){
 }
 // ─── END NEW FEATURES ───
 
+// ═══════════════════════════════════════════════
+// 7. AI HEALTH COACH BOT
+// ═══════════════════════════════════════════════
+
+const AI_PROVIDERS = {
+  anthropic: {
+    name: 'Anthropic Claude',
+    url: 'https://api.anthropic.com/v1/messages',
+    chatModel: 'claude-3-5-sonnet-20241022',
+    summaryModel: 'claude-3-5-haiku-20241022'
+  },
+  openai: {
+    name: 'OpenAI GPT',
+    url: 'https://api.openai.com/v1/chat/completions',
+    chatModel: 'gpt-4o',
+    summaryModel: 'gpt-4o-mini'
+  },
+  gemini: {
+    name: 'Google Gemini',
+    url: 'https://generativelanguage.googleapis.com/v1beta/models',
+    chatModel: 'gemini-1.5-flash',
+    summaryModel: 'gemini-1.5-flash'
+  }
+};
+
+let aiConfig = {
+  provider: 'anthropic',
+  apiKey: '',
+  userName: '',
+  enabled: false
+};
+
+let aiData = {
+  conversations: [],  // {role: 'user'|'assistant', content, timestamp}
+  dailySummaries: {}, // 'YYYY-MM-DD': {summary, generated_at}
+  lastSummaryDate: null
+};
+
+let _aiSending = false;
+
+function loadAIConfig() {
+  try {
+    const saved = localStorage.getItem('wtp_ai_config');
+    if (saved) aiConfig = { ...aiConfig, ...JSON.parse(saved) };
+    aiConfig.enabled = !!aiConfig.apiKey;
+  } catch(e) { console.error('AI config load error:', e); }
+}
+
+function saveAIConfigStorage() {
+  try {
+    localStorage.setItem('wtp_ai_config', JSON.stringify(aiConfig));
+  } catch(e) { console.error('AI config save error:', e); }
+}
+
+function loadAIData() {
+  try {
+    const saved = localStorage.getItem('wtp_ai_data');
+    if (saved) aiData = { ...aiData, ...JSON.parse(saved) };
+  } catch(e) { console.error('AI data load error:', e); }
+}
+
+function saveAIData() {
+  try {
+    // Keep only last 100 conversations to avoid bloat
+    if (aiData.conversations.length > 100) {
+      aiData.conversations = aiData.conversations.slice(-100);
+    }
+    localStorage.setItem('wtp_ai_data', JSON.stringify(aiData));
+  } catch(e) { console.error('AI data save error:', e); }
+}
+
+function initAI() {
+  loadAIConfig();
+  loadAIData();
+  updateAIStatusUI();
+  renderAIChatMessages();
+  renderAIDataTable();
+  
+  // Check for daily summary - run if we haven't summarized yesterday yet
+  if (aiConfig.enabled && aiConfig.apiKey) {
+    setTimeout(checkDailySummary, 2000);
+  }
+}
+
+// ─── DATA AGGREGATION ───
+function getDayMacros(dateStr) {
+  const d = D.daily[dateStr] || {};
+  const meals = d.meals || [];
+  let protein = 0, carbs = 0, fat = 0;
+  meals.forEach(m => {
+    protein += m.protein || 0;
+    carbs += m.carbs || 0;
+    fat += m.fat || 0;
+  });
+  const weight = D.history.find(e => e.date === dateStr)?.weight;
+  return {
+    date: dateStr,
+    weight: weight || null,
+    calsIn: d.calsIn || 0,
+    calsOut: d.calsOut || 0,
+    protein: Math.round(protein),
+    carbs: Math.round(carbs),
+    fat: Math.round(fat),
+    water: d.water || 0,
+    steps: d.steps || 0,
+    sleep: d.sleep || 0,
+    mealsCount: meals.length
+  };
+}
+
+function getAllDataDates() {
+  const allDates = new Set([
+    ...D.history.map(e => e.date),
+    ...Object.keys(D.daily || {})
+  ]);
+  return [...allDates].sort((a,b) => parseDateStr(b) - parseDateStr(a));
+}
+
+// ─── RENDER DATA TABLE ───
+function renderAIDataTable() {
+  const tbody = document.getElementById('ai-data-table-body');
+  const countEl = document.getElementById('ai-data-count');
+  if (!tbody) return;
+  
+  const dates = getAllDataDates();
+  if (countEl) countEl.textContent = dates.length + ' ימים';
+  
+  if (dates.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="10"><div class="ai-data-empty">📊 עדיין אין נתונים<br><span style="font-size:9px;opacity:.6">תעד שקילה או ארוחה כדי להתחיל</span></div></td></tr>';
+    return;
+  }
+  
+  const td = today();
+  const calGoal = D.calorieGoal || 2000;
+  const waterGoal = D.waterGoal || 2.5;
+  const stepsGoal = D.stepsGoal || 10000;
+  const sleepGoal = D.sleepGoal || 7.5;
+  
+  tbody.innerHTML = dates.slice(0, 30).map(date => {
+    const m = getDayMacros(date);
+    const isToday = date === td;
+    
+    // Color coding helpers
+    const calClass = m.calsIn === 0 ? 'td-empty' : 
+                     m.calsIn <= calGoal ? 'td-good' : 
+                     m.calsIn <= calGoal * 1.1 ? 'td-warn' : 'td-bad';
+    const waterClass = m.water === 0 ? 'td-empty' :
+                       m.water >= waterGoal ? 'td-good' : 
+                       m.water >= waterGoal * 0.7 ? 'td-warn' : 'td-bad';
+    const stepsClass = m.steps === 0 ? 'td-empty' :
+                       m.steps >= stepsGoal ? 'td-good' : 
+                       m.steps >= stepsGoal * 0.7 ? 'td-warn' : 'td-bad';
+    
+    return `<tr class="${isToday ? 'today-row' : ''}">
+      <td class="td-date">${date.substring(0,5)}</td>
+      <td>${m.weight ? m.weight.toFixed(1) : '<span class="td-empty">—</span>'}</td>
+      <td class="${calClass}">${m.calsIn || '<span class="td-empty">—</span>'}</td>
+      <td>${m.calsOut || '<span class="td-empty">—</span>'}</td>
+      <td>${m.protein ? m.protein+'g' : '<span class="td-empty">—</span>'}</td>
+      <td>${m.carbs ? m.carbs+'g' : '<span class="td-empty">—</span>'}</td>
+      <td>${m.fat ? m.fat+'g' : '<span class="td-empty">—</span>'}</td>
+      <td class="${waterClass}">${m.water ? m.water.toFixed(1)+'L' : '<span class="td-empty">—</span>'}</td>
+      <td class="${stepsClass}">${m.steps ? m.steps.toLocaleString() : '<span class="td-empty">—</span>'}</td>
+      <td>${m.sleep ? m.sleep+'h' : '<span class="td-empty">—</span>'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function toggleAIDataTable() {
+  const wrap = document.getElementById('ai-data-table-wrap');
+  const toggle = document.getElementById('ai-data-toggle');
+  if (!wrap || !toggle) return;
+  
+  const isOpen = wrap.classList.contains('open');
+  if (isOpen) {
+    wrap.classList.remove('open');
+    toggle.classList.remove('expanded');
+  } else {
+    wrap.classList.add('open');
+    toggle.classList.add('expanded');
+    renderAIDataTable(); // Refresh on open
+  }
+  haptic(15);
+}
+
+function updateAIStatusUI() {
+  const statusDot = document.getElementById('ai-status-dot');
+  const statusText = document.getElementById('ai-status-text');
+  if (!statusDot || !statusText) return;
+  
+  if (aiConfig.enabled && aiConfig.apiKey) {
+    statusDot.classList.add('online');
+    statusText.textContent = '🟢 מחובר ומוכן לעזור';
+    statusText.classList.add('connected');
+    statusText.classList.remove('error');
+  } else {
+    statusDot.classList.remove('online');
+    statusText.textContent = '⚙️ לחץ כאן להגדרה ראשונית';
+    statusText.classList.remove('connected');
+  }
+}
+
+function openAISettings() {
+  const modal = document.getElementById('ai-settings-modal');
+  if (modal) modal.classList.add('open');
+  document.getElementById('ai-provider-select').value = aiConfig.provider;
+  document.getElementById('ai-api-key').value = aiConfig.apiKey;
+  document.getElementById('ai-user-name').value = aiConfig.userName || '';
+  haptic(20);
+}
+
+function closeAISettings() {
+  const modal = document.getElementById('ai-settings-modal');
+  if (modal) modal.classList.remove('open');
+}
+
+function updateAIProvider() {
+  const newProvider = document.getElementById('ai-provider-select').value;
+  aiConfig.provider = newProvider;
+}
+
+function saveAISettings() {
+  aiConfig.provider = document.getElementById('ai-provider-select').value;
+  aiConfig.apiKey = document.getElementById('ai-api-key').value.trim();
+  aiConfig.userName = document.getElementById('ai-user-name').value.trim();
+  aiConfig.enabled = !!aiConfig.apiKey;
+  
+  saveAIConfigStorage();
+  updateAIStatusUI();
+  closeAISettings();
+  
+  if (aiConfig.enabled) {
+    toast('הגדרות AI נשמרו! 🤖');
+    // Hide welcome screen
+    const welcome = document.getElementById('ai-welcome');
+    if (welcome && aiData.conversations.length === 0) {
+      welcome.style.display = 'none';
+      // Send welcome message
+      aiAddMessage('assistant', getWelcomeMessage(), Date.now(), false);
+    }
+  } else {
+    toast('יש להכניס מפתח API', 'warn');
+  }
+}
+
+function getWelcomeMessage() {
+  const name = aiConfig.userName ? ` ${aiConfig.userName}` : '';
+  const cur = getCur();
+  const start = D.startWeight;
+  const target = D.targetWeight;
+  const lost = (start - cur).toFixed(1);
+  
+  return `שלום${name}! 👋\n\nאני יועץ הבריאות האישי שלך. אני מכיר את הנתונים שלך:\n\n📊 משקל נוכחי: ${cur} ק"ג\n🎯 יעד: ${target} ק"ג\n📉 ירדת עד כה: ${lost} ק"ג\n\nאתה יכול לשאול אותי כל דבר על:\n• התקדמות והישגים\n• המלצות תזונה\n• ניתוח דפוסים\n• עידוד ומוטיבציה\n\nאיך אני יכול לעזור?`;
+}
+
+function aiClearHistory() {
+  if (!confirm('האם למחוק את כל היסטוריית השיחות והסיכומים?')) return;
+  aiData = { conversations: [], dailySummaries: {}, lastSummaryDate: null };
+  saveAIData();
+  renderAIChatMessages();
+  closeAISettings();
+  toast('היסטוריה נמחקה');
+}
+
+function aiAutoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+function aiHandleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    aiSendMessage();
+  }
+}
+
+function aiAutoScroll() {
+  const c = document.getElementById('ai-chat-container');
+  if (c) setTimeout(() => { c.scrollTop = c.scrollHeight; }, 50);
+}
+
+function aiAddMessage(role, content, timestamp, save = true) {
+  const msg = { role, content, timestamp: timestamp || Date.now() };
+  if (save) {
+    aiData.conversations.push(msg);
+    saveAIData();
+  }
+  renderAIMessage(msg);
+  aiAutoScroll();
+}
+
+function renderAIMessage(msg) {
+  const c = document.getElementById('ai-chat-container');
+  if (!c) return;
+  
+  // Hide welcome
+  const welcome = document.getElementById('ai-welcome');
+  if (welcome) welcome.style.display = 'none';
+  
+  const div = document.createElement('div');
+  div.className = 'ai-msg ai-msg-' + (msg.role === 'user' ? 'user' : 'bot');
+  
+  // Format content (basic markdown-like)
+  let html = escapeHtml(msg.content)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/\n/g, '<br>');
+  
+  const time = new Date(msg.timestamp).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+  
+  div.innerHTML = `<div>${html}</div><div class="ai-msg-time">${time}</div>`;
+  c.appendChild(div);
+}
+
+function escapeHtml(s) {
+  const div = document.createElement('div');
+  div.textContent = s;
+  return div.innerHTML;
+}
+
+function renderAIChatMessages() {
+  const c = document.getElementById('ai-chat-container');
+  if (!c) return;
+  
+  // Clear except welcome
+  const welcome = document.getElementById('ai-welcome');
+  c.innerHTML = '';
+  if (welcome) c.appendChild(welcome);
+  
+  if (aiData.conversations.length === 0) {
+    if (welcome) welcome.style.display = 'flex';
+    return;
+  }
+  
+  if (welcome) welcome.style.display = 'none';
+  
+  let lastDate = null;
+  aiData.conversations.forEach(msg => {
+    const msgDate = new Date(msg.timestamp).toLocaleDateString('he-IL');
+    if (msgDate !== lastDate) {
+      const sep = document.createElement('div');
+      sep.className = 'ai-day-sep';
+      sep.textContent = msgDate === new Date().toLocaleDateString('he-IL') ? 'היום' : msgDate;
+      c.appendChild(sep);
+      lastDate = msgDate;
+    }
+    renderAIMessage(msg);
+  });
+  
+  aiAutoScroll();
+}
+
+function aiShowTyping() {
+  const el = document.getElementById('ai-typing');
+  if (el) el.style.display = 'block';
+  aiAutoScroll();
+}
+
+function aiHideTyping() {
+  const el = document.getElementById('ai-typing');
+  if (el) el.style.display = 'none';
+}
+
+async function aiSendMessage(customText) {
+  if (_aiSending) return;
+  
+  if (!aiConfig.enabled || !aiConfig.apiKey) {
+    toast('יש להגדיר API תחילה ⚙️', 'warn');
+    openAISettings();
+    return;
+  }
+  
+  const input = document.getElementById('ai-input');
+  const text = customText || input?.value.trim();
+  
+  if (!text) return;
+  
+  _aiSending = true;
+  const sendBtn = document.getElementById('ai-send-btn');
+  if (sendBtn) sendBtn.disabled = true;
+  
+  // Add user message
+  aiAddMessage('user', text);
+  
+  if (input) {
+    input.value = '';
+    input.style.height = 'auto';
+  }
+  
+  aiShowTyping();
+  haptic(20);
+  
+  try {
+    const response = await callAI(text);
+    aiHideTyping();
+    aiAddMessage('assistant', response);
+    haptic(40);
+  } catch (e) {
+    aiHideTyping();
+    console.error('AI error:', e);
+    aiAddMessage('assistant', `❌ שגיאה: ${e.message}\n\nוודא שמפתח ה-API תקין בהגדרות.`);
+    
+    const statusText = document.getElementById('ai-status-text');
+    if (statusText) {
+      statusText.textContent = '❌ שגיאת חיבור';
+      statusText.classList.add('error');
+    }
+  } finally {
+    _aiSending = false;
+    if (sendBtn) sendBtn.disabled = false;
+  }
+}
+
+async function aiQuickAction(action) {
+  const prompts = {
+    summary: 'סכם לי את היום של היום - מה הלך טוב, מה היה פחות טוב, ומה אני יכול לשפר',
+    advice: 'תן לי טיפ אישי בריאות שמתאים למצב הנוכחי שלי כרגע',
+    motivation: 'אני זקוק לקצת עידוד ומוטיבציה. הזכר לי כמה רחוק הגעתי במסע הזה',
+    analyze: 'נתח את ההתקדמות שלי בחודש האחרון - מגמות, דפוסים, ותחזית'
+  };
+  
+  const prompt = prompts[action];
+  if (prompt) await aiSendMessage(prompt);
+}
+
+// ─── BUILD SYSTEM PROMPT ───
+function buildAISystemPrompt() {
+  const cur = getCur();
+  const start = D.startWeight || cur;
+  const target = D.targetWeight || cur;
+  const totalChange = (start - cur).toFixed(1);
+  const remaining = (cur - target).toFixed(1);
+  const totalToGoal = (start - target).toFixed(1);
+  const progress = totalToGoal > 0 ? Math.min(100, ((start - cur) / totalToGoal * 100)).toFixed(0) : 0;
+  
+  // Today's data
+  const td = today();
+  const todayMacros = getDayMacros(td);
+  
+  // Calculate stats
+  const weeklyAvg = calcWeeklyAvg();
+  const daysActive = D.history.length;
+  
+  // ── FULL DATA TABLE (last 21 days for context) ──
+  const allDates = getAllDataDates().slice(0, 21);
+  const tableData = allDates.map(date => {
+    const m = getDayMacros(date);
+    return `${date} | משקל:${m.weight ? m.weight+'kg' : '—'} | קלוריות:${m.calsIn||0}/${m.calsOut||0} | חלבון:${m.protein||0}g | פחמ׳:${m.carbs||0}g | שומן:${m.fat||0}g | מים:${m.water||0}L | צעדים:${m.steps||0} | שינה:${m.sleep||0}h | ארוחות:${m.mealsCount||0}`;
+  }).join('\n');
+  
+  // Today's meals details
+  const todayData = D.daily[td] || {};
+  const meals = todayData.meals || [];
+  const mealsList = meals.length > 0 ? meals.map(m => 
+    `- ${m.name} (${m.calories} קק"ל | חלבון:${m.protein.toFixed(0)}g | פחמ׳:${m.carbs.toFixed(0)}g | שומן:${m.fat.toFixed(0)}g | ${m.timestamp})`
+  ).join('\n') : 'עדיין לא נרשמו ארוחות היום';
+  
+  // Daily summaries memory (last 7 days)
+  const recentSummaries = Object.entries(aiData.dailySummaries || {})
+    .sort((a,b) => parseDateStr(b[0]) - parseDateStr(a[0]))
+    .slice(0, 7)
+    .map(([date, s]) => `${date}: ${s.summary}`)
+    .join('\n\n');
+  
+  // Calculate averages from last 7 days
+  const last7 = allDates.slice(0, 7).map(d => getDayMacros(d));
+  const avgCalsIn = last7.length ? Math.round(last7.reduce((s,m) => s + m.calsIn, 0) / last7.length) : 0;
+  const avgProtein = last7.length ? Math.round(last7.reduce((s,m) => s + m.protein, 0) / last7.length) : 0;
+  const avgWater = last7.length ? (last7.reduce((s,m) => s + m.water, 0) / last7.length).toFixed(1) : 0;
+  const avgSteps = last7.length ? Math.round(last7.reduce((s,m) => s + m.steps, 0) / last7.length) : 0;
+  
+  const name = aiConfig.userName ? aiConfig.userName : 'המשתמש';
+  
+  return `אתה יועץ בריאות אישי בעברית עבור ${name}. אתה חכם, אמפתי, ישיר וכן. אתה מתמחה בירידה במשקל, תזונה ופעילות גופנית.
+
+## פרופיל המשתמש
+- שם: ${name}
+- משקל התחלתי: ${start} ק"ג
+- משקל נוכחי: ${cur} ק"ג
+- משקל יעד: ${target} ק"ג
+- שינוי כולל: ${totalChange} ק"ג ${totalChange > 0 ? '(ירידה ✅)' : ''}
+- נשאר ליעד: ${remaining} ק"ג
+- אחוז התקדמות: ${progress}%
+- ימים פעילים: ${daysActive}
+- ממוצע ירידה שבועי: ${weeklyAvg}
+
+## יעדים יומיים
+- קלוריות: ${D.calorieGoal || 2000}
+- מים: ${D.waterGoal || 2.5} ליטר
+- צעדים: ${D.stepsGoal || 10000}
+- שינה: ${D.sleepGoal || 7.5} שעות
+
+## ממוצעים שבועיים (7 ימים אחרונים)
+- קלוריות: ${avgCalsIn} קק"ל/יום
+- חלבון: ${avgProtein}g/יום
+- מים: ${avgWater}L/יום
+- צעדים: ${avgSteps}/יום
+
+## נתוני היום (${todayFull()})
+- משקל: ${todayMacros.weight || 'לא נשקל'}
+- קלוריות נכנסו: ${todayMacros.calsIn}
+- קלוריות יצאו: ${todayMacros.calsOut}
+- חלבון: ${todayMacros.protein}g
+- פחמימות: ${todayMacros.carbs}g
+- שומן: ${todayMacros.fat}g
+- מים: ${todayMacros.water}L
+- צעדים: ${todayMacros.steps}
+- שינה: ${todayMacros.sleep}h
+- ארוחות שתועדו: ${todayMacros.mealsCount}
+
+## ארוחות היום (פירוט)
+${mealsList}
+
+## טבלת נתונים מלאה (21 ימים אחרונים)
+${tableData || 'אין עדיין נתונים'}
+
+${recentSummaries ? `## זיכרון - סיכומי ימים אחרונים\n${recentSummaries}\n` : ''}
+
+## כללי תגובה
+1. ענה בעברית **תמיד**
+2. היה תמציתי - 2-4 משפטים, אלא אם מבקשים פירוט
+3. השתמש באימוג'י במידה
+4. **תייחס לנתונים האמיתיים מהטבלה** - אל תמציא מספרים
+5. כשהמשתמש שואל "מה אכלתי" או "כמה X" - תסתכל בטבלה ותענה במדויק
+6. היה תומך אבל ישיר - אם המשתמש לא בכיוון, תגיד בנעימות
+7. אל תיתן הצהרות רפואיות מסוכנות - בשאלות מקצועיות הפנה לרופא
+8. השתמש ב-**הדגשה** למילים חשובות
+9. כשמדברים על מגמות - חשב מהטבלה (ממוצעים, השוואות, מגמות עליה/ירידה)`;
+}
+
+function calcWeeklyAvg() {
+  if (D.history.length < 2) return 'אין מספיק נתונים';
+  const sorted = [...D.history].sort((a,b) => parseDateStr(a.date) - parseDateStr(b.date));
+  const first = sorted[0];
+  const last = sorted[sorted.length - 1];
+  const daysDiff = (parseDateStr(last.date) - parseDateStr(first.date)) / (1000*60*60*24);
+  if (daysDiff < 1) return 'אין מספיק נתונים';
+  const change = first.weight - last.weight;
+  const weekly = (change / daysDiff * 7).toFixed(2);
+  return `${weekly} ק"ג`;
+}
+
+// ─── CALL AI API ───
+async function callAI(userMessage) {
+  const provider = AI_PROVIDERS[aiConfig.provider];
+  if (!provider) throw new Error('ספק לא מוכר');
+  
+  const systemPrompt = buildAISystemPrompt();
+  
+  // Get last 15 messages for context (efficient!)
+  const recentMessages = aiData.conversations.slice(-15).map(m => ({
+    role: m.role,
+    content: m.content
+  }));
+  
+  // Add current message
+  recentMessages.push({ role: 'user', content: userMessage });
+  
+  if (aiConfig.provider === 'anthropic') {
+    return await callAnthropic(systemPrompt, recentMessages, provider.chatModel);
+  } else if (aiConfig.provider === 'openai') {
+    return await callOpenAI(systemPrompt, recentMessages, provider.chatModel);
+  } else if (aiConfig.provider === 'gemini') {
+    return await callGemini(systemPrompt, recentMessages, provider.chatModel);
+  }
+  
+  throw new Error('ספק לא נתמך');
+}
+
+async function callAnthropic(systemPrompt, messages, model) {
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': aiConfig.apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: model,
+      max_tokens: 1024,
+      system: systemPrompt,
+      messages: messages
+    })
+  });
+  
+  if (!response.ok) {
+    const errText = await response.text();
+    let errMsg = 'שגיאת API';
+    try {
+      const errJson = JSON.parse(errText);
+      errMsg = errJson.error?.message || errMsg;
+    } catch(e) {}
+    throw new Error(`${response.status}: ${errMsg}`);
+  }
+  
+  const data = await response.json();
+  return data.content[0].text;
+}
+
+async function callOpenAI(systemPrompt, messages, model) {
+  const allMessages = [{ role: 'system', content: systemPrompt }, ...messages];
+  
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + aiConfig.apiKey
+    },
+    body: JSON.stringify({
+      model: model,
+      messages: allMessages,
+      max_tokens: 1024,
+      temperature: 0.7
+    })
+  });
+  
+  if (!response.ok) {
+    const errJson = await response.json().catch(() => ({}));
+    throw new Error(`${response.status}: ${errJson.error?.message || 'שגיאת API'}`);
+  }
+  
+  const data = await response.json();
+  return data.choices[0].message.content;
+}
+
+async function callGemini(systemPrompt, messages, model) {
+  // Gemini uses a different format
+  const contents = messages.map(m => ({
+    role: m.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: m.content }]
+  }));
+  
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${aiConfig.apiKey}`;
+  
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      systemInstruction: { parts: [{ text: systemPrompt }] },
+      contents: contents,
+      generationConfig: {
+        maxOutputTokens: 1024,
+        temperature: 0.7
+      }
+    })
+  });
+  
+  if (!response.ok) {
+    const errJson = await response.json().catch(() => ({}));
+    throw new Error(`${response.status}: ${errJson.error?.message || 'שגיאת API'}`);
+  }
+  
+  const data = await response.json();
+  return data.candidates[0].content.parts[0].text;
+}
+
+// ─── DAILY SUMMARY ───
+async function checkDailySummary() {
+  if (!aiConfig.enabled || !aiConfig.apiKey) return;
+  
+  // Get yesterday's date in DD/MM/YYYY format (matching app's format)
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yDateStr = yesterday.getDate().toString().padStart(2,'0') + '/' + 
+                   (yesterday.getMonth()+1).toString().padStart(2,'0') + '/' + 
+                   yesterday.getFullYear();
+  
+  // Check if already summarized
+  if (aiData.dailySummaries[yDateStr]) return;
+  
+  // Check if there's actually data from yesterday
+  const yData = D.daily[yDateStr];
+  if (!yData || (!yData.weight && !yData.calsIn && !yData.water && !yData.steps)) return;
+  
+  // Generate summary
+  try {
+    await generateDailySummary(yDateStr);
+  } catch(e) {
+    console.error('Daily summary error:', e);
+  }
+}
+
+async function generateDailySummary(dateStr) {
+  const m = getDayMacros(dateStr);
+  const meals = (D.daily[dateStr] || {}).meals || [];
+  const mealsList = meals.map(meal => `${meal.name} (${meal.calories}kcal)`).join(', ');
+  
+  const calGoal = D.calorieGoal || 2000;
+  const waterGoal = D.waterGoal || 2.5;
+  const stepsGoal = D.stepsGoal || 10000;
+  
+  const prompt = `סכם בקצרה (2-3 משפטים) את היום הזה:
+תאריך: ${dateStr}
+משקל: ${m.weight || 'לא נשקל'} ק"ג
+קלוריות נכנסו: ${m.calsIn} / יעד: ${calGoal}
+קלוריות יצאו: ${m.calsOut}
+חלבון: ${m.protein}g
+פחמימות: ${m.carbs}g
+שומן: ${m.fat}g
+מים: ${m.water}L / יעד: ${waterGoal}L
+צעדים: ${m.steps} / יעד: ${stepsGoal}
+שינה: ${m.sleep}h
+ארוחות (${meals.length}): ${mealsList || 'לא תועד'}
+
+תן סיכום קצר וענייני ב-2-3 משפטים. ציין מה הלך טוב ומה חסר. בלי הקדמות.`;
+
+  try {
+    const provider = AI_PROVIDERS[aiConfig.provider];
+    let summary;
+    
+    if (aiConfig.provider === 'anthropic') {
+      summary = await callAnthropic('אתה מסכם ימים בקצרה ובעברית.', [{role:'user', content: prompt}], provider.summaryModel);
+    } else if (aiConfig.provider === 'openai') {
+      summary = await callOpenAI('אתה מסכם ימים בקצרה ובעברית.', [{role:'user', content: prompt}], provider.summaryModel);
+    } else {
+      summary = await callGemini('אתה מסכם ימים בקצרה ובעברית.', [{role:'user', content: prompt}], provider.summaryModel);
+    }
+    
+    aiData.dailySummaries[dateStr] = {
+      summary: summary.trim(),
+      generated_at: Date.now(),
+      data: m  // Store structured data with summary
+    };
+    aiData.lastSummaryDate = today();
+    saveAIData();
+    
+    console.log('✅ Daily summary generated for', dateStr);
+    
+    // Show notification in chat if user is in AI tab
+    if (document.getElementById('tab-ai')?.classList.contains('active')) {
+      aiAddMessage('assistant', `📅 **סיכום ${dateStr}:**\n\n${summary.trim()}`, Date.now(), true);
+    }
+  } catch(e) {
+    console.error('Failed to generate summary:', e);
+  }
+}
+// ─── END AI BOT ───
+
 
 function exportCSV(){
   const hdr='תאריך,משקל (קג),קלוריות נכנסו,קלוריות יצאו,מים (ליטר),צעדים,שינה (שעות)';
@@ -2762,6 +3784,7 @@ window.onload=()=>{
     loadFastData();
     loadNotifSettings();
     initGFit();
+    initAI();
   });
 };
 function afterLoad(){

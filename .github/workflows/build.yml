@@ -19,16 +19,18 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Install Gradle 8.5 directly
+    - name: Create local.properties
+      run: echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+    - name: Install Gradle 8.5
       run: |
         GRADLE_VERSION=8.5
         wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -O /tmp/gradle.zip
         sudo unzip -q /tmp/gradle.zip -d /opt
         echo "/opt/gradle-${GRADLE_VERSION}/bin" >> $GITHUB_PATH
-        /opt/gradle-${GRADLE_VERSION}/bin/gradle --version
 
     - name: Build Debug APK
-      run: gradle assembleDebug --no-daemon --stacktrace
+      run: /opt/gradle-8.5/bin/gradle assembleDebug --no-daemon --stacktrace
 
     - name: Rename APK
       run: cp app/build/outputs/apk/debug/app-debug.apk HealthTracker.apk
